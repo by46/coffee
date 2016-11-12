@@ -1,0 +1,9 @@
+Flask
+Flask-CORS
+Flask-NegLog
+Flask-RESTful
+Flask-SQLAlchemy
+Flask-Script
+Flask-Migrate
+Flask-Restful-Swagger
+Gevent
