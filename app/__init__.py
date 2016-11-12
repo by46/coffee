@@ -4,6 +4,7 @@
 
 from flask import Flask
 from flask_cors import CORS
+from flask_login import LoginManager
 from flask_neglog import Log
 from flask_sqlalchemy import SQLAlchemy
 
@@ -11,6 +12,7 @@ __version__ = '0.0.1'
 __author__ = 'Recipe'
 
 log_manager = Log()
+login_manager = LoginManager()
 cors = CORS()
 db = SQLAlchemy()
 
@@ -22,6 +24,7 @@ def create_app(config_name):
     app.config['VERSION'] = __version__
 
     log_manager.init_app(app)
+    login_manager.init_app(app)
     cors.init_app(app)
     db.init_app(app)
 
