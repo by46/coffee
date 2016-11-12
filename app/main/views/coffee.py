@@ -1,5 +1,4 @@
-from datetime import datetime
-
+from dateutil.parser import parse
 from flask_login import login_required
 from flask_restful import Resource
 from flask_restful import marshal_with
@@ -14,6 +13,10 @@ from app.main.meta import filter_params
 from app.main.serializer import CoffeeResource
 from app.models import Coffee
 from .resource import BusinessResource
+
+
+def custom_datetime(value, name):
+    return parse(value)
 
 
 class CoffeeApi(BusinessResource):
@@ -33,9 +36,11 @@ class CoffeeApi(BusinessResource):
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('name', str, help="coffer's name")
-        parser.add_argument('on_sale_date', type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'))
+        parser.add_argument('on_sale_date', type=custom_datetime)
+        parser.add_argument('imported', type=bool)
+        parser.add_argument('imported2', type=bool)
         args = parser.parse_args()
-        coffee = Coffee(name=args.name, on_sale_date=args.on_sale_date, vendor_id=1)
+        coffee = Coffee(name=args.name, on_sale_date=args.on_sale_date, vendor_id=1, imported=args.imported)
         db.session.add(coffee)
         db.session.commit()
         return coffee

@@ -8,3 +8,4 @@ Flask-Script
 Flask-Migrate
 Flask-Restful-Swagger
 Gevent
+python-dateutil
