@@ -9,3 +9,5 @@ Flask-Migrate
 Flask-Restful-Swagger
 Gevent
 python-dateutil
+SQLAlchemy
+Qiniu
