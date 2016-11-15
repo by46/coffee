@@ -9,7 +9,7 @@ from flask_upload.views import upload_blueprint
 URL_PREFIX = 'url_prefix'
 ACCESS_KEY = 'qiniu_access_key'
 SECRET_KEY = 'qiniu_secret_key'
-BUCKET = 'bucket'
+BUCKET = 'qiniu_bucket'
 HOST = 'qiniu_cdn'
 
 missing = object()
