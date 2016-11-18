@@ -7,7 +7,9 @@ Flask-SQLAlchemy
 Flask-Script
 Flask-Migrate
 Flask-Restful-Swagger
+Flask-WTF
 Gevent
 python-dateutil
 SQLAlchemy
 Qiniu
+Furl

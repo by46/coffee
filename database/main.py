@@ -3,6 +3,7 @@ from sqlalchemy import orm
 from sqlalchemy import schema
 from sqlalchemy import types
 from sqlalchemy.engine import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 engine = create_engine('mysql://root:root@10.16.76.245/coffee')
 
@@ -86,6 +87,19 @@ orm.mapper(MountainAlbum, local_table=mountain_album_table)
 orm.mapper(Tag, tag_table)
 orm.mapper(Article, article_table,
            properties={'tags': orm.relation(Tag, secondary=article_tag_table, backref='articles')})
+
+Base = declarative_base()
+from sqlalchemy import Column
+
+
+class Cookie(Base):
+    __tablename__ = 'cookies'
+    cookie_id = Column(types.Integer(), primary_key=True)
+    cookie_name = Column(types.String(50), index=True)
+    cookie_sku = Column(types.String(55))
+    quantity = Column(types.Integer())
+    unit_cost = Column(types.Numeric(12, 2))
+
 
 Session = orm.sessionmaker(bind=engine, autoflush=True, autocommit=False, expire_on_commit=True)
 
