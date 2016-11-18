@@ -9,3 +9,6 @@ class Feedback(db.Model):
     coffee_id = db.Column(db.Integer, db.ForeignKey('coffee.id'))
     content = db.Column(db.String(100), nullable=False)
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Feedback {0}>'.format(self.id)

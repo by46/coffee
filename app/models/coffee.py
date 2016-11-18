@@ -14,7 +14,7 @@ class Coffee(db.Model):
     imported = db.Column(db.Boolean, default=True)
     on_sale_date = db.Column(db.DateTime, default=datetime.utcnow)
     feedbacks = db.relationship('Feedback',
-                                backref='coffee', lazy='dynamic')
+                                backref='coffee', lazy='select')
 
     def __repr__(self):
         return "<Coffee {0}>".format(self.id)

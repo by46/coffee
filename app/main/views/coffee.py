@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from dateutil.parser import parse
 from flask_login import login_required
 from flask_restful import Resource
@@ -34,21 +36,30 @@ class CoffeeApi(BusinessResource):
     @swagger.operation(notes="Coffee list", parameters=filter_params())
     @Paginate(CoffeeResource, item_builder=set_feedback_count)
     def get(self):
-        db.session.query(Coffee, func.count(Feedback.id)).outerjoin(Feedback, Coffee.id == Feedback.coffee_id).group_by(
-            Coffee.id).all()
-        print db.session.query(Coffee.name, Coffee.id).first()
-        print db.session.query(Coffee).order_by(Coffee.name)[2:5]
-        print db.session.query(Coffee).order_by(Coffee.name).limit(2).all()
-        print 'count:', db.session.query(func.sum(Coffee.id)).scalar()
-        print 'count & sum', db.session.query(func.count(Coffee.id), func.sum(Coffee.id)).first()
-        result = db.session.query(func.count(Coffee.id).label('count_1'), func.sum(Coffee.id).label('sum_1')).first()
-        print 'count & sum', result.keys(), result.count_1, result.sum_1
+        # db.session.query(Coffee, func.count(Feedback.id)).outerjoin(Feedback, Coffee.id == Feedback.coffee_id).group_by(
+        #     Coffee.id).all()
+        # print db.session.query(Coffee.name, Coffee.id).first()
+        # print db.session.query(Coffee).order_by(Coffee.name)[2:5]
+        # print db.session.query(Coffee).order_by(Coffee.name).limit(2).all()
+        # print 'count:', db.session.query(func.sum(Coffee.id)).scalar()
+        # print 'count & sum', db.session.query(func.count(Coffee.id), func.sum(Coffee.id)).first()
+        # result = db.session.query(func.count(Coffee.id).label('count_1'), func.sum(Coffee.id).label('sum_1')).first()
+        # print 'count & sum', result.keys(), result.count_1, result.sum_1
+
+        print Feedback.query.filter(Feedback.coffee_id == 1, Feedback.id > 1).order_by(
+            Feedback.create_time.desc()).limit(2).all()
+
+        start = datetime(2016, 11, 11, 0, 0, 0, 0)
+        end = datetime(2016, 11, 11, 23, 59, 59, 0)
+        query = Coffee.query.filter(Coffee.on_sale_date >= start, Coffee.on_sale_date <= end)
+        print query.all()
 
         query = db.session.query(Coffee, func.count(Feedback.id))
-        query.outerjoin(Feedback, Coffee.id == Feedback.coffee_id)
-        query.group_by(Coffee.id)
-        # return query
-        return Coffee.query.filter_by(vendor_id=1)
+        query = query.outerjoin(Feedback, Coffee.id == Feedback.coffee_id)
+        query = query.filter(Coffee.id > 1)
+        query = query.group_by(Coffee.id).order_by(Coffee.on_sale_date.desc())
+        return query
+        # return Coffee.query.filter_by(vendor_id=1)
 
     @swagger.operation(notes="New Coffee List",
                        parameters=[{
