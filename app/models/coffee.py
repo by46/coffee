@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import Index
 
 from app import db
+from .coffee_vendor import CoffeeVendor
 
 
 class Coffee(db.Model):
@@ -15,6 +16,7 @@ class Coffee(db.Model):
     on_sale_date = db.Column(db.DateTime, default=datetime.utcnow)
     feedbacks = db.relationship('Feedback',
                                 backref='coffee', lazy='select')
+    vendors = db.relationship('Vendor', secondary=CoffeeVendor)
 
     def __repr__(self):
         return "<Coffee {0}>".format(self.id)

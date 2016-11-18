@@ -15,7 +15,9 @@ from app.main.meta import CoffeeModel
 from app.main.meta import filter_params
 from app.main.serializer import CoffeeResource
 from app.models import Coffee
+from app.models import CoffeeVendor
 from app.models import Feedback
+from app.models import Vendor
 from flask_kits.restful import Paginate
 from .resource import BusinessResource
 
@@ -43,8 +45,8 @@ class CoffeeApi(BusinessResource):
         # print db.session.query(Coffee).order_by(Coffee.name).limit(2).all()
         # print 'count:', db.session.query(func.sum(Coffee.id)).scalar()
         # print 'count & sum', db.session.query(func.count(Coffee.id), func.sum(Coffee.id)).first()
-        # result = db.session.query(func.count(Coffee.id).label('count_1'), func.sum(Coffee.id).label('sum_1')).first()
-        # print 'count & sum', result.keys(), result.count_1, result.sum_1
+        result = db.session.query(func.count(1).label('count_1'), func.sum(Coffee.id).label('sum_1')).first()
+        print 'count & sum', result.keys(), result.count_1, result.sum_1
 
         print Feedback.query.filter(Feedback.coffee_id == 1, Feedback.id > 1).order_by(
             Feedback.create_time.desc()).limit(2).all()
@@ -52,6 +54,10 @@ class CoffeeApi(BusinessResource):
         start = datetime(2016, 11, 11, 0, 0, 0, 0)
         end = datetime(2016, 11, 11, 23, 59, 59, 0)
         query = Coffee.query.filter(Coffee.on_sale_date >= start, Coffee.on_sale_date <= end)
+        print query.all()
+
+        query = db.session.query(Coffee, func.count(1)).join((Vendor, CoffeeVendor)).order_by(
+            Coffee.on_sale_date.desc())
         print query.all()
 
         query = db.session.query(Coffee, func.count(Feedback.id))
