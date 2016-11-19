@@ -8,6 +8,7 @@ Flask-Script
 Flask-Migrate
 Flask-Restful-Swagger
 Flask-WTF
+Flask-JWT
 Gevent
 python-dateutil
 SQLAlchemy

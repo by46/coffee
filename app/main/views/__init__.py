@@ -2,6 +2,7 @@ from app import login_manager
 from app.models import User
 from app.models import WxUser
 from . import coffee
+from . import evernote
 from . import index
 from . import misc
 from . import user
