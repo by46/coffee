@@ -4,5 +4,8 @@ from .user import User
 from .vendor import Vendor
 from .wx_user import WxUser
 from .feedback import Feedback
-from .coffee_vendor import CoffeeVendor
-
+from .coffee_vendor import coffee_vendor
+from .demo import Demo
+from .coffee_vendor import demo2
+from .demo import Demo3
+from .demo import  Demo5

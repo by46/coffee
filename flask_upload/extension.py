@@ -29,20 +29,20 @@ class Upload(object):
     def init_app(self, app, **kwargs):
         self._app = app
         self._options.update(kwargs)
-        self._access_key = self.get_parameter(ACCESS_KEY)
-        self._secret_key = self.get_parameter(SECRET_KEY)
-        self._bucket = self.get_parameter(BUCKET)
-        self._host = self.get_parameter(HOST)
+        self._access_key = self.get_parameter(ACCESS_KEY, app=app)
+        self._secret_key = self.get_parameter(SECRET_KEY, app=app)
+        self._bucket = self.get_parameter(BUCKET, app=app)
+        self._host = self.get_parameter(HOST, app=app)
 
         self._app.upload = self
-        upload_blueprint.url_prefix = self.get_parameter(URL_PREFIX)
+        upload_blueprint.url_prefix = self.get_parameter(URL_PREFIX, app=app)
         app.register_blueprint(upload_blueprint)
 
-    def get_parameter(self, name, default=None):
+    def get_parameter(self, name, default=None, app=None):
         option = self._options.get(name, missing)
         if option is missing:
             parameter_name = 'UPLOAD_{0}'.format(name.upper())
-            option = self._app.config.get(parameter_name, default)
+            option = app.config.get(parameter_name, default)
         return option
 
     def get_auth(self):

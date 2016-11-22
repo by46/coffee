@@ -15,9 +15,8 @@ from app.main.meta import CoffeeModel
 from app.main.meta import filter_params
 from app.main.serializer import CoffeeResource
 from app.models import Coffee
-from app.models import CoffeeVendor
+# from app.models import CoffeeVendor
 from app.models import Feedback
-from app.models import Vendor
 from flask_kits.restful import Paginate
 from .resource import BusinessResource
 
@@ -32,6 +31,15 @@ def set_feedback_count(record):
     item, count = record
     item.feedback_count = count
     return item
+
+
+def compatible_bool(value):
+    if isinstance(value, basestring):
+        LITERAL = {'false': False, 'true': True}
+        json_value = value.lower()
+        if json_value in LITERAL:
+            return LITERAL.get(json_value)
+    return bool(value)
 
 
 class CoffeeApi(BusinessResource):
@@ -56,9 +64,9 @@ class CoffeeApi(BusinessResource):
         query = Coffee.query.filter(Coffee.on_sale_date >= start, Coffee.on_sale_date <= end)
         print query.all()
 
-        query = db.session.query(Coffee, func.count(1)).join((Vendor, CoffeeVendor)).order_by(
-            Coffee.on_sale_date.desc())
-        print query.all()
+        # query = db.session.query(Coffee, func.count(1)).join((Vendor, CoffeeVendor)).order_by(
+        #     Coffee.on_sale_date.desc())
+        # print query.all()
 
         query = db.session.query(Coffee, func.count(Feedback.id))
         query = query.outerjoin(Feedback, Coffee.id == Feedback.coffee_id)
@@ -79,7 +87,7 @@ class CoffeeApi(BusinessResource):
         parser = reqparse.RequestParser()
         parser.add_argument('name', str, help="coffer's name")
         parser.add_argument('on_sale_date', type=custom_datetime)
-        parser.add_argument('imported', type=bool)
+        parser.add_argument('imported', type=compatible_bool)
         parser.add_argument('imported2', type=bool)
         args = parser.parse_args()
         coffee = Coffee(name=args.name, on_sale_date=args.on_sale_date, vendor_id=1, imported=args.imported)

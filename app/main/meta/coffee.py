@@ -6,5 +6,7 @@ from flask_restful_swagger import swagger
 class CoffeeModel(object):
     resource_fields = {
         "name": fields.String,
-        "on_sale_date": fields.DateTime
+        "on_sale_date": fields.DateTime,
+        "imported": fields.Boolean,
+        "imported2": fields.Boolean
     }

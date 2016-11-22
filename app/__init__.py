@@ -8,7 +8,6 @@ from flask_jwt import JWT
 from flask_login import LoginManager
 from flask_neglog import Log
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import safe_str_cmp
 
 from flask_upload import Upload
 
@@ -53,10 +52,15 @@ def create_app(config_name):
     cors.init_app(app)
     db.init_app(app)
     uploader.init_app(app)
-    jwt.init_app(app)
+    # jwt.init_app(app)
+    from werkzeug.exceptions import NotFound
+    from werkzeug.exceptions import InternalServerError
+    @app.errorhandler(NotFound)
+    def handle_bad_request(e):
+        return 'bad request'
 
     from .main import main as main_blueprint
+    from .auth import auth as auth_blueprint
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(auth_blueprint)
     return app
-
-

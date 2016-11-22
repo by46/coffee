@@ -16,6 +16,7 @@ if __name__ == '__main__':
     app = create_app(os.environ.get(ENV_NAME, 'development'))
 
     app.logger.info('demo listening %s:%s', app.config['HTTP_HOST'], app.config['HTTP_PORT'])
+    app.logger.info('demo run ing')
     print app.url_map
 
     if app.config.get('DEBUG', False):
