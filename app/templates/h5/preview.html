@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for_with_cached('static', filename='css/pygments.css', version='11234') }}">
+</head>
+<body>
+{{ greeting('benjamin') }}
+{% autoescape false %}
+{% code 'python' %}
+    from flask import render_template
+
+    from app.h5 import h5
+
+
+    @h5.route('/preview', methods=['GET'])
+    def preview():
+    return render_template('h5/preview.html')
+
+{% endcode %}
+{% endautoescape %}
+</body>
+</html>

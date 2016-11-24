@@ -9,7 +9,11 @@ from flask_login import LoginManager
 from flask_neglog import Log
 from flask_sqlalchemy import SQLAlchemy
 
+from flask_pygments import Pygments
 from flask_upload import Upload
+from flask_kits.routing import KitRule
+
+Flask.url_rule_class = KitRule
 
 __version__ = '0.0.1'
 __author__ = 'Recipe'
@@ -39,6 +43,7 @@ cors = CORS()
 db = SQLAlchemy()
 uploader = Upload()
 jwt = JWT()
+pygments = Pygments()
 
 
 def create_app(config_name):
@@ -53,14 +58,19 @@ def create_app(config_name):
     db.init_app(app)
     uploader.init_app(app)
     # jwt.init_app(app)
+    pygments.init_app(app)
+
     from werkzeug.exceptions import NotFound
-    from werkzeug.exceptions import InternalServerError
     @app.errorhandler(NotFound)
     def handle_bad_request(e):
         return 'bad request'
 
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint
+    from .h5 import h5 as h5_blueprint
+
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint)
+    app.register_blueprint(h5_blueprint)
+
     return app
