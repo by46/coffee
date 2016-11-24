@@ -3,15 +3,17 @@
 """
 
 from flask import Flask
+from flask_assets import Environment
 from flask_cors import CORS
 from flask_jwt import JWT
 from flask_login import LoginManager
 from flask_neglog import Log
 from flask_sqlalchemy import SQLAlchemy
 
+from flask_kits.routing import KitRule
 from flask_pygments import Pygments
 from flask_upload import Upload
-from flask_kits.routing import KitRule
+from .assets import register_bundle
 
 Flask.url_rule_class = KitRule
 
@@ -44,6 +46,9 @@ db = SQLAlchemy()
 uploader = Upload()
 jwt = JWT()
 pygments = Pygments()
+assets = Environment()
+
+register_bundle(assets)
 
 
 def create_app(config_name):
@@ -59,11 +64,7 @@ def create_app(config_name):
     uploader.init_app(app)
     # jwt.init_app(app)
     pygments.init_app(app)
-
-    from werkzeug.exceptions import NotFound
-    @app.errorhandler(NotFound)
-    def handle_bad_request(e):
-        return 'bad request'
+    assets.init_app(app)
 
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint

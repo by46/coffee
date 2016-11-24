@@ -9,9 +9,11 @@ Flask-Migrate
 Flask-Restful-Swagger
 Flask-WTF
 Flask-JWT
+Flask-Assets
 Gevent
 python-dateutil
 SQLAlchemy
 Qiniu
 Furl
 Pygments
+CSSmin

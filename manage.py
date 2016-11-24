@@ -1,12 +1,14 @@
 import os
 import os.path
 
+from flask_assets import ManageAssets
 from flask_migrate import Migrate
 from flask_migrate import MigrateCommand
 from flask_script import Manager
 from flask_script import Shell
 from pygments.formatters.html import HtmlFormatter
 
+from app import assets
 from app import create_app
 from app import db
 from app.models import Coffee
@@ -36,6 +38,7 @@ def make_shell_context():
 
 manager.add_command('shell', Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
+manager.add_command('assets', ManageAssets(assets))
 
 if __name__ == '__main__':
     manager.run()
