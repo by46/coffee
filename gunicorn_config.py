@@ -14,7 +14,6 @@ keepalive = 2
 # Server mechanics
 daemon = False
 user = 'benjamin'
-group = 'benjamin'
 
 # Logging
 errorlog = 'gunicorn.log'
