@@ -1,6 +1,6 @@
 import posixpath
 
-APP_NAME = '/weather/'
+APP_NAME = '/coffee/'
 
 
 def make_url_prefix(url_prefix):

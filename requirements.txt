@@ -10,6 +10,7 @@ Flask-WTF
 Flask-JWT
 Flask-Assets
 Flask-Bcrypt
+Flask-Principal
 Gevent
 python-dateutil
 SQLAlchemy
