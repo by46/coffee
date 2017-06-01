@@ -9,6 +9,7 @@ from flask_cors import CORS
 from flask_jwt import JWT
 from flask_login import LoginManager
 from flask_login import current_user
+from flask_menu import Menu
 from flask_principal import Permission
 from flask_principal import Principal
 from flask_principal import RoleNeed
@@ -36,6 +37,7 @@ pygments = Pygments()
 assets = Environment()
 bcrypt = Bcrypt()
 register_bundle(assets)
+menu = Menu()
 
 admin_permission = Permission(RoleNeed('admin'))
 default_permission = Permission(RoleNeed('default'))
@@ -57,6 +59,7 @@ def create_app(config_name):
     bcrypt.init_app(app)
     principals.init_app(app)
     principals.init_app(app)
+    menu.init_app(app)
 
     @identity_loaded.connect_via(app)
     def on_identity_loaded(sender, identity):

@@ -11,6 +11,7 @@ Flask-JWT
 Flask-Assets
 Flask-Bcrypt
 Flask-Principal
+Flask-Menu
 Gevent
 python-dateutil
 SQLAlchemy
