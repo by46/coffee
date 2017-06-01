@@ -34,11 +34,11 @@ def set_feedback_count(record):
 
 
 def compatible_bool(value):
-    if isinstance(value, basestring):
-        LITERAL = {'false': False, 'true': True}
-        json_value = value.lower()
-        if json_value in LITERAL:
-            return LITERAL.get(json_value)
+    # if isinstance(value, basestring):
+    #     LITERAL = {'false': False, 'true': True}
+    #     json_value = value.lower()
+    #     if json_value in LITERAL:
+    #         return LITERAL.get(json_value)
     return bool(value)
 
 
@@ -54,15 +54,15 @@ class CoffeeApi(BusinessResource):
         # print 'count:', db.session.query(func.sum(Coffee.id)).scalar()
         # print 'count & sum', db.session.query(func.count(Coffee.id), func.sum(Coffee.id)).first()
         result = db.session.query(func.count(1).label('count_1'), func.sum(Coffee.id).label('sum_1')).first()
-        print 'count & sum', result.keys(), result.count_1, result.sum_1
+        print('count & sum', result.keys(), result.count_1, result.sum_1)
 
-        print Feedback.query.filter(Feedback.coffee_id == 1, Feedback.id > 1).order_by(
-            Feedback.create_time.desc()).limit(2).all()
+        print(Feedback.query.filter(Feedback.coffee_id == 1, Feedback.id > 1).order_by(
+            Feedback.create_time.desc()).limit(2).all())
 
         start = datetime(2016, 11, 11, 0, 0, 0, 0)
         end = datetime(2016, 11, 11, 23, 59, 59, 0)
         query = Coffee.query.filter(Coffee.on_sale_date >= start, Coffee.on_sale_date <= end)
-        print query.all()
+        print(query.all())
 
         # query = db.session.query(Coffee, func.count(1)).join((Vendor, CoffeeVendor)).order_by(
         #     Coffee.on_sale_date.desc())

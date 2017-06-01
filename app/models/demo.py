@@ -1,3 +1,6 @@
+from sqlalchemy import desc
+from sqlalchemy.event import listens_for
+
 from app import db
 
 
@@ -5,9 +8,6 @@ class Demo(db.Model):
     __table_args__ = {'mysql_engine': 'InnoDB'}
     id = db.Column(db.Integer, primary_key=True)
 
-
-from sqlalchemy.event import listens_for
-from sqlalchemy import desc
 
 idx_name = db.Index('idx_demo3_name', 'name desc')
 
@@ -64,6 +64,6 @@ def receive_before_parent_attach(target, parent):
 
 
 class Demo5(db.Model):
-    __table_args__ = (db.Index('idx_demo5_name_2', 'name'),idx_name2, {'mysql_engine': 'InnoDB'})
+    __table_args__ = (db.Index('idx_demo5_name_2', 'name'), idx_name2, {'mysql_engine': 'InnoDB'})
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))

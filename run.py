@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     app.logger.info('demo listening %s:%s', app.config['HTTP_HOST'], app.config['HTTP_PORT'])
     app.logger.info('demo run ing')
-    print app.url_map
+    print(app.url_map)
 
     if app.config.get('DEBUG', False):
         app.run(app.config['HTTP_HOST'], app.config['HTTP_PORT'], debug=False)

@@ -2,6 +2,5 @@ from flask import Blueprint
 
 from app.utils import make_url_prefix
 
-auth = Blueprint('auth', __name__, url_prefix=make_url_prefix('auth'))
-
+portal = Blueprint('portal', __name__, url_prefix=make_url_prefix('portal'))
 from . import views

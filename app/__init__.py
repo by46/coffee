@@ -4,10 +4,10 @@
 
 from flask import Flask
 from flask_assets import Environment
+from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from flask_jwt import JWT
 from flask_login import LoginManager
-from flask_neglog import Log
 from flask_sqlalchemy import SQLAlchemy
 
 from flask_kits.routing import KitRule
@@ -39,7 +39,6 @@ users = [
 username_table = {u.username: u for u in users}
 userid_table = {u.id: u for u in users}
 
-log_manager = Log()
 login_manager = LoginManager()
 cors = CORS()
 db = SQLAlchemy()
@@ -47,6 +46,7 @@ uploader = Upload()
 jwt = JWT()
 pygments = Pygments()
 assets = Environment()
+bcrypt = Bcrypt()
 
 register_bundle(assets)
 
@@ -57,7 +57,6 @@ def create_app(config_name):
     app.config.from_object('config.{0}'.format(config_name.lower()))
     app.config['VERSION'] = __version__
 
-    log_manager.init_app(app)
     login_manager.init_app(app)
     cors.init_app(app)
     db.init_app(app)
@@ -65,13 +64,16 @@ def create_app(config_name):
     # jwt.init_app(app)
     pygments.init_app(app)
     assets.init_app(app)
+    bcrypt.init_app(app)
 
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint
     from .h5 import h5 as h5_blueprint
+    from .portal import portal as portal_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(h5_blueprint)
+    app.register_blueprint(portal_blueprint)
 
     return app

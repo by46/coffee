@@ -4,8 +4,8 @@ ENCODINGS = ['utf8', 'gbk']
 
 
 def decode_statement(statement, encodings):
-    if isinstance(statement, unicode):
-        return statement
+    # if isinstance(statement, unicode):
+    #     return statement
     for encoding in encodings:
         try:
             return statement.decode(encoding)
@@ -84,4 +84,4 @@ def main(str_input):
 
 if __name__ == "__main__":
     str_input = u'K珠穆朗玛峰'
-    print main(str_input)
+    print(main(str_input))

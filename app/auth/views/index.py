@@ -1,5 +1,7 @@
 from flask import render_template
+
 from app.auth import auth
+
 
 @auth.route('/demo1')
 def demo1():

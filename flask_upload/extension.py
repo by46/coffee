@@ -1,5 +1,3 @@
-import httplib
-
 import requests
 from qiniu import Auth
 from qiniu import put_data
@@ -54,11 +52,11 @@ class Upload(object):
     def upload(self, key, content, mime_type):
         url = self.__make_url(key)
         response = requests.head(url)
-        if response.status_code == httplib.OK:
+        if response.status_code == 200:
             return response.headers.get('etag').strip("\"")
         q = Auth(self._access_key, self._secret_key)
         token = q.upload_token(self._bucket, key, 3600)
         ret, response = put_data(token, key, content, mime_type=mime_type)
-        if response.status_code == httplib.OK:
+        if response.status_code == 200:
             return url, ret.get('hash')
         return None, None
