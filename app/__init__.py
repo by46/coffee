@@ -1,6 +1,4 @@
-"""demo
-
-"""
+# -:- coding:utf8 -:-
 
 from flask import Flask
 from flask_assets import Environment
