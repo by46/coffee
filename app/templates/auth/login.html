@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form name="main-form" method="POST">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="username" class="form-control"
+                       name="username" placeholder="账号" require
+                       data-empty="请输入账号"
+                       value="">
+                <i class="ace-icon fa fa-user"></i>
+                </span>
+        </label>
+
+        <label class="block clearfix">
+        <span class="block input-icon input-icon-right">
+            <input type="password" id="password"
+                   class="form-control"
+                   autocomplete="off"
+                   name="password" placeholder="密码" require
+                   data-empty="请输入密码" value="">
+            <i class="ace-icon fa fa-lock"></i>
+        </span>
+        </label>
+
+        <div class="space"></div>
+
+        <div class="clearfix">
+            <label class="inline">
+                <input type="checkbox" class="ace"/>
+                <span class="lbl"> 记住我</span>
+            </label>
+
+            <button type="submit"
+                    class="width-35 pull-right btn btn-sm btn-primary">
+                <i class="ace-icon fa fa-key"></i>
+                <span class="bigger-110">登录</span>
+            </button>
+        </div>
+
+        <div class="space-4"></div>
+        <div class="error-tips" style="color:red;">
+            {% for message in get_flashed_messages() %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    </fieldset>
+</form>
+</body>
+</html>

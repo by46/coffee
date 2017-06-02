@@ -1,6 +1,5 @@
 Flask
 Flask-CORS
-Flask-NegLog
 Flask-RESTful
 Flask-Login
 Flask-SQLAlchemy
@@ -10,10 +9,16 @@ Flask-Restful-Swagger
 Flask-WTF
 Flask-JWT
 Flask-Assets
+Flask-Bcrypt
+Flask-Principal
+Flask-Menu
 Gevent
 python-dateutil
 SQLAlchemy
+PyMySQL
 Qiniu
 Furl
 Pygments
 CSSmin
+MarkupSafe
+Six

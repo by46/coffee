@@ -2,7 +2,7 @@
 DEBUG = True
 
 # SQL-Alchemy settings
-SQLALCHEMY_DATABASE_URI = "mysql://root:root@10.16.76.245/coffee"
+SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:root@localhost:3306/coffee"
 SQLALCHEMY_ECHO = True
 
 # Flask-Upload settings

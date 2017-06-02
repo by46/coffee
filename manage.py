@@ -12,6 +12,8 @@ from app import assets
 from app import create_app
 from app import db
 from app.models import Coffee
+from app.models import Role
+from app.models import User
 from app.models import Vendor
 
 app = create_app('development')
@@ -34,6 +36,24 @@ def make_shell_context():
                 Vendor=Vendor,
                 Coffee=Coffee,
                 init_pygments=init_pygments)
+
+
+@manager.command
+def init():
+    default_role = Role()
+    default_role.name = 'default'
+    db.session.add(default_role)
+
+    admin_role = Role()
+    admin_role.name = 'admin'
+    db.session.add(admin_role)
+
+    user = User()
+    user.name = 'by46'
+    user.password = '123456'
+    user.roles.append(default_role)
+    db.session.add(user)
+    db.session.commit()
 
 
 manager.add_command('shell', Shell(make_context=make_shell_context))
