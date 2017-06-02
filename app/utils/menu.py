@@ -1,6 +1,8 @@
 from functools import partial
 
+from flask import request
 from flask_login import current_user
+from flask_menu import MenuEntryMixin
 from flask_menu import current_menu
 
 
@@ -20,6 +22,18 @@ def visible_when(menu_item):
     return False
 
 
+def active_when(menu_item):
+    """
+    
+    :param MenuEntryMixin menu_item: 
+    :return: 
+    """
+    if request.endpoint == menu_item._endpoint:
+        return True
+
+    return False
+
+
 def config_menu(app, items):
     """
     items contains menu item, like below
@@ -35,11 +49,10 @@ def config_menu(app, items):
     @app.before_first_request
     def before_first_request():
         for item in items:
-            menu_item = current_menu.submenu(item.get('name'))  # type: MenuEntryMixin
-            menu_item._text = item.get('text')
-            order = item.get('order')
-            if order is not None:
-                menu_item._order = order
-                menu_item.role = item.get('role')
-
-            menu_item._visible_when = partial(visible_when, menu_item)
+            kwargs = item.copy()
+            name = kwargs.pop('name')
+            menu_item = current_menu.submenu(name)  # type: MenuEntryMixin
+            kwargs['endpoint'] = None
+            kwargs['visible_when'] = partial(visible_when, menu_item)
+            kwargs['active_when'] = active_when
+            menu_item.register(**kwargs)
