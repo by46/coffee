@@ -21,6 +21,7 @@ from flask_kits.routing import KitRule
 from flask_pygments import Pygments
 from flask_upload import Upload
 from .assets import register_bundle
+from .utils import config_menu
 
 Flask.url_rule_class = KitRule
 
@@ -88,4 +89,10 @@ def create_app(config_name):
     app.register_blueprint(h5_blueprint)
     app.register_blueprint(portal_blueprint)
 
+    config_menu(app, [
+        {'name': 'profile', 'text': 'Home', 'role': 'default', 'order': 1},
+        {'name': 'log', 'text': 'Log', 'order': 2},
+        {'name': 'project', 'text': 'Project', 'role': 'admin', 'order': 4},
+        {'name': 'budget', 'text': 'Budget', 'role': 'default', 'order': 3},
+    ])
     return app

@@ -5,8 +5,8 @@ from flask_menu import register_menu
 from app.portal import portal
 
 
-@portal.route('/profile')
-@register_menu(portal, '.profile.info', 'Basic info')
+@portal.route('/log')
+@register_menu(portal, '.log.system_log', "日志")
 @login_required
-def profile():
-    return render_template('portal/profile.html')
+def log():
+    return render_template('portal/log.html')
