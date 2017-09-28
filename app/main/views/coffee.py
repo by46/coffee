@@ -17,7 +17,7 @@ from app.main.serializer import CoffeeResource
 from app.models import Coffee
 # from app.models import CoffeeVendor
 from app.models import Feedback
-from flask_kits.restful import Paginate
+from flask_kits1.restful import Paginate
 from .resource import BusinessResource
 
 

@@ -6,6 +6,7 @@ from . import evernote
 from . import index
 from . import misc
 from . import user
+from . import vue
 from . import wx_user
 
 PREFIX_WX = "wx_"

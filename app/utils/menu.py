@@ -1,25 +1,25 @@
 from functools import partial
 
+from bunch import Bunch
 from flask import request
 from flask_login import current_user
 from flask_menu import MenuEntryMixin
 from flask_menu import current_menu
+from flask_menu import register_menu
 
 
-def visible_when(menu_item):
+def visible_when(roles):
     """
 
-    :param MenuEntryMixin menu_item: 
+    :param list[str] roles: 
     :return: 
     """
-    role_name = getattr(menu_item, 'role', None)
-    if not role_name:
+    if not roles:
         return True
 
-    for role in current_user.roles:
-        if role.name == role_name:
-            return True
-    return False
+    actual_roles = set(roles)
+    expect_roles = set([role.name for role in current_user.roles])
+    return actual_roles & expect_roles
 
 
 def active_when(menu_item):
@@ -37,10 +37,10 @@ def active_when(menu_item):
 def config_menu(app, items):
     """
     items contains menu item, like below
-    {'name': 'profile', 'text': 'Home', 'role': 'admin', 'order': 1}
+    {'name': 'profile', 'text': 'Home', 'roles': ['admin'], 'order': 1}
     
     :param flask.Flask app:
-    :param list[dict] items:
+    :param list[Bunch] items:
     
     """
     if not items:
@@ -49,10 +49,22 @@ def config_menu(app, items):
     @app.before_first_request
     def before_first_request():
         for item in items:
-            kwargs = item.copy()
-            name = kwargs.pop('name')
+            name = item.pop('name')
             menu_item = current_menu.submenu(name)  # type: MenuEntryMixin
-            kwargs['endpoint'] = None
-            kwargs['visible_when'] = partial(visible_when, menu_item)
-            kwargs['active_when'] = active_when
-            menu_item.register(**kwargs)
+            item.endpoint = None
+            item.visible_when = partial(visible_when, item.roles)
+            item.active_when = active_when
+            menu_item.register(**item)
+
+
+def register_menu_ex(app, path, text, **kwargs):
+    """
+    :param app:
+    :param path:
+    :param text:
+    :param kwargs:
+    
+    """
+    new_visible_when = partial(visible_when, kwargs.get('roles'))
+    kwargs['visible_when'] = new_visible_when
+    return register_menu(app, path, text, **kwargs)

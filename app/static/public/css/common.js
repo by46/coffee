@@ -1,1 +1,0 @@
-console.log('Admin js, version 1.2.0');console.log('Common js, version 1.9.0');

@@ -1,5 +1,6 @@
 # -:- coding:utf8 -:-
 
+from bunch import Bunch
 from flask import Flask
 from flask_assets import Environment
 from flask_bcrypt import Bcrypt
@@ -15,7 +16,7 @@ from flask_principal import UserNeed
 from flask_principal import identity_loaded
 from flask_sqlalchemy import SQLAlchemy
 
-from flask_kits.routing import KitRule
+from flask_kits1.routing import KitRule
 from flask_pygments import Pygments
 from flask_upload import Upload
 from .assets import register_bundle
@@ -81,16 +82,18 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     from .h5 import h5 as h5_blueprint
     from .portal import portal as portal_blueprint
+    from .api import api as api_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(h5_blueprint)
     app.register_blueprint(portal_blueprint)
+    app.register_blueprint(api_blueprint)
 
     config_menu(app, [
-        {'name': 'profile', 'text': 'Home', 'role': 'default', 'order': 1},
-        {'name': 'log', 'text': 'Log', 'order': 2},
-        {'name': 'project', 'text': 'Project', 'role': 'admin', 'order': 4},
-        {'name': 'budget', 'text': 'Budget', 'role': 'default', 'order': 3},
+        Bunch(name='profile', text='Home', roles=['default'], order=1),
+        Bunch(name='log', text='Log', roles=['default'], order=2),
+        Bunch(name='project', text='Project', roles=['admin'], order=4),
+        Bunch(name='budget', text='Budget', roles=['default'], order=3)
     ])
     return app

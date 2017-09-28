@@ -10,7 +10,7 @@ Portal Index
     {% for item in current_menu.children recursive %}
         {% if item.visible %}
             <li>
-                <a href="{{ item.url }}">{{ item.text }}</a>
+                <a href="{{ item.url }}">{{ item.text }}</a> {{ item. }}
                 {% if item.children %}
                     <ul>
                         {{ loop(item.children) }}

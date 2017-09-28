@@ -3,7 +3,7 @@
 """
 import gevent.monkey
 
-gevent.monkey.patch_all()
+# gevent.monkey.patch_all()
 
 if __name__ == '__main__':
     import os
