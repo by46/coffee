@@ -6,8 +6,8 @@ from app import default_permission
 from app.portal import portal
 
 
-@portal.route('/')
-@register_menu(portal, '.index', 'Home', order=1)
+@portal.route('/index')
+@register_menu(portal, '.index', 'Home2', order=1)
 @login_required
 @default_permission.require(http_exception=403)
 def index():

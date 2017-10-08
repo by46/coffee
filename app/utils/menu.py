@@ -54,5 +54,5 @@ def config_menu(app, items):
             menu_item = current_menu.submenu(name)  # type: MenuEntryMixin
             kwargs['endpoint'] = None
             kwargs['visible_when'] = partial(visible_when, menu_item)
-            kwargs['active_when'] = active_when
+            # kwargs['active_when'] = active_when
             menu_item.register(**kwargs)

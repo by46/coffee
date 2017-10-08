@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>Welcome to demo!</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"/>
+</head>
+<body>
+<ul>
+    {% for item in current_menu.children %}
+        {% if item.visible %}
+            <li>
+                <a href="{{ item.url }}">{{ item.text }} </a>
+                {% if item.has_active_child() %}
+                    <span> True </span>
+                {% endif %}
+                {% if item.children %}
+                    <ul>
+                        {% for sub_item in item.children %}
+                            <li>
+                                <a href="{{ sub_item.url }}">{{ sub_item.text }} -  {{ sub_item.active }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endif %}
+
+    {% endfor %}
+</ul>
+{% block content %}
+
+{% endblock %}
+</body>
+{% block scripts %}
+{% endblock %}
+</html>
