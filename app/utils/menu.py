@@ -56,7 +56,6 @@ def config_menu(app, items):
             item.active_when = active_when
             menu_item.register(**item)
 
-
 def register_menu_ex(app, path, text, **kwargs):
     """
     :param app:
