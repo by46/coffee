@@ -21,6 +21,7 @@ gunicorn --workers=8 --bind=127.0.0.1:9080 --worker-class=gevent --name=coffee w
 ## validate
 
 api : http://127.0.0.1:9080/coffee/api/spec.html
+api: http://localhost:8080/coffee/api/v1/api/spec.html#!/spec
 
 sudo supervisorctl status
 sudo supervisorctl signal HUP hello
