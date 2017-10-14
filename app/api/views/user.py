@@ -13,6 +13,8 @@ from app.api import restful_api
 from app.api.serializer import UserSerializer
 from app.models import User
 from app.utils.common import select_bind
+from .parser import EntityBase
+from .parser import Field
 
 
 def item_builder(item):
@@ -62,7 +64,8 @@ restful_api.add_resource(UserApi, '/user/<int:user_id>')
 @swagger.model
 class Entity(object):
     resource_fields = {
-        "types": fields.Integer
+        "types": fields.Integer,
+        "Name": fields.String
     }
 
 
@@ -140,5 +143,26 @@ class User4Api(Resource):
         db.session.commit()
 
 
-
 restful_api.add_resource(User4Api, '/user4')
+
+
+class UserEntity(EntityBase):
+    Name = Field('Name', location='json', type=str)
+
+def wrapper(fn, entity_class):
+    def wrapped(*args, **kwargs):
+        pass
+    return wrapped
+
+class User5Api(Resource):
+    @UserSerializer.parameter(data_type=Entity)
+    @UserSerializer.single
+    def post(self, user_id, entity):
+        entity = UserEntity.parse()
+        print(entity.Name)
+        print(isinstance(entity, dict))
+        entity.ApplicationID = 123456
+        print(entity, entity.ApplicationID)
+
+
+restful_api.add_resource(User5Api, '/user5/<int:user_id>')
