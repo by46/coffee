@@ -1,4 +1,7 @@
 # -:- coding:utf8 -:-
+
+from decimal import Decimal
+
 from flask_restful import Resource
 from flask_restful import abort
 from flask_restful import fields
@@ -15,6 +18,12 @@ from app.models import User
 from app.utils.common import select_bind
 from .parser import EntityBase
 from .parser import Field
+from .parser import LetterValidator
+from .parser import MaxLengthValidator
+from .parser import MinLengthValidator
+from .parser import MoreValidator
+from .parser import PrecisionValidator
+from .parser import parameter
 
 
 def item_builder(item):
@@ -64,7 +73,7 @@ restful_api.add_resource(UserApi, '/user/<int:user_id>')
 @swagger.model
 class Entity(object):
     resource_fields = {
-        "types": fields.Integer,
+        "Types": fields.Integer,
         "Name": fields.String
     }
 
@@ -146,23 +155,45 @@ class User4Api(Resource):
 restful_api.add_resource(User4Api, '/user4')
 
 
-class UserEntity(EntityBase):
-    Name = Field('Name', location='json', type=str)
+class AddressEntity(EntityBase):
+    Zip = Field("Zip")
 
-def wrapper(fn, entity_class):
-    def wrapped(*args, **kwargs):
-        pass
-    return wrapped
+
+class UserEntity(EntityBase):
+    # Name = Field('Name', location='json', type=str, validators=[MinLengthValidator(5), MaxLengthValidator(10)])
+    # Age = Field('Age', type=int, validators=[MoreValidator(10), LetterValidator(15)])
+    # Sex = Field('Sex', type=bool, default=True)
+    # Amount = Field('Amount', type=Decimal,
+    #                validators=[MoreValidator(Decimal('10.1')),
+    #                            LetterValidator(Decimal("12.9")),
+    #                            PrecisionValidator(2)])
+    Address = Field('Address', type=AddressEntity)
+
+    def validate(self):
+        if self.Sex:
+            return True
+        return ValueError("Must be female")
+
 
 class User5Api(Resource):
     @UserSerializer.parameter(data_type=Entity)
     @UserSerializer.single
-    def post(self, user_id, entity):
+    def post(self, user_id):
+        parser = RequestParser()
+        parser.add_argument('Name', action='append')
+        parser.add_argument('Address')
+        args = parser.parse_args()
+        print(args)
         entity = UserEntity.parse()
         print(entity.Name)
         print(isinstance(entity, dict))
         entity.ApplicationID = 123456
         print(entity, entity.ApplicationID)
+
+    @parameter(UserEntity)
+    @UserSerializer.single
+    def put(self, user_id, entity):
+        print(user_id, entity.Name)
 
 
 restful_api.add_resource(User5Api, '/user5/<int:user_id>')
