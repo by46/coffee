@@ -16,6 +16,7 @@ from flask_restful_swagger import swagger
 from six import add_metaclass
 from six import iteritems
 from six import text_type
+from werkzeug.datastructures import MultiDict
 
 
 def parameter(schema):
@@ -67,6 +68,7 @@ class DeclarativeMeta(type):
         for name, field in fields:
             if inspect.isclass(field.type) and issubclass(field.type, EntityBase):
                 field.type = field.type.parse
+                field.location = 'json'
             parser.add_argument(field)
             field_names.add(name)
             resource_fields[name] = get_field_type(field.type)
@@ -86,7 +88,10 @@ class WrappedDict(dict):
         super(WrappedDict, self).__init__(**source)
 
     def json(self):
-        return self
+        return MultiDict(self)
+
+    def values(self):
+        return None
 
 
 @add_metaclass(DeclarativeMeta)

@@ -1,7 +1,5 @@
 # -:- coding:utf8 -:-
 
-from decimal import Decimal
-
 from flask_restful import Resource
 from flask_restful import abort
 from flask_restful import fields
@@ -18,11 +16,7 @@ from app.models import User
 from app.utils.common import select_bind
 from .parser import EntityBase
 from .parser import Field
-from .parser import LetterValidator
-from .parser import MaxLengthValidator
 from .parser import MinLengthValidator
-from .parser import MoreValidator
-from .parser import PrecisionValidator
 from .parser import parameter
 
 
@@ -156,7 +150,7 @@ restful_api.add_resource(User4Api, '/user4')
 
 
 class AddressEntity(EntityBase):
-    Zip = Field("Zip")
+    Zip = Field("Zip", validators=[MinLengthValidator(5)])
 
 
 class UserEntity(EntityBase):
@@ -169,7 +163,7 @@ class UserEntity(EntityBase):
     #                            PrecisionValidator(2)])
     Address = Field('Address', type=AddressEntity)
 
-    def validate(self):
+    def validate1(self):
         if self.Sex:
             return True
         return ValueError("Must be female")
@@ -193,7 +187,7 @@ class User5Api(Resource):
     @parameter(UserEntity)
     @UserSerializer.single
     def put(self, user_id, entity):
-        print(user_id, entity.Name)
+        print(user_id, entity)
 
 
 restful_api.add_resource(User5Api, '/user5/<int:user_id>')
