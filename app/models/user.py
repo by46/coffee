@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from app import bcrypt
 from app import db
 from .mixins import UserTypeMixin
+from werkzeug.security import generate_password_hash
 
 UserRole = db.Table('users_roles',
                     db.Column('id', db.Integer, primary_key=True),
