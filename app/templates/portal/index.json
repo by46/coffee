@@ -1,0 +1,44 @@
+{
+  "swagger": "2.0",
+  "produces": [
+    "application/json"
+  ],
+  "basePath": "http://127.0.0.1/coffee",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/pet": {
+      "post": {
+        "summary": "Add a new pet to store",
+        "description": "like",
+        "operationId": "addPet",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/x-www-form-urlencoded",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Pet": {
+      "type": "object"
+    }
+  }
+}

@@ -12,3 +12,8 @@ from app.utils import register_menu_ex
 @default_permission.require(http_exception=403)
 def index():
     return render_template('portal/index.html')
+
+
+@portal.route('/index.json')
+def json():
+    return render_template('portal/index.json'), 200, {'Content-Type': 'Application/json'}
