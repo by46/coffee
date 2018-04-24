@@ -1,3 +1,43 @@
 {
   "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "pet demo",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/coffee/swagger-demo",
+  "paths": {
+    "/pets": {
+      "get": {
+        "tags": [
+          "Pets"
+        ],
+        "summary": "pet",
+        "operationId": "getPets",
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Pet": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "description": "name"
+        }
+      }
+    }
+  }
 }
