@@ -82,15 +82,17 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     from .h5 import h5 as h5_blueprint
     from .portal import portal as portal_blueprint
-    from .google import router as google_blueprint
     from .api import api as api_blueprint
+    from .swagger import swagger as swagger_blueprint
+    from .swagger_demo import main as swagger_demo_blueprint
 
-    app.register_blueprint(main_blueprint)
-    app.register_blueprint(auth_blueprint)
-    app.register_blueprint(h5_blueprint)
-    app.register_blueprint(portal_blueprint)
-    app.register_blueprint(google_blueprint)
-    app.register_blueprint(api_blueprint)
+    # app.register_blueprint(main_blueprint)
+    # app.register_blueprint(auth_blueprint)
+    # app.register_blueprint(h5_blueprint)
+    # app.register_blueprint(portal_blueprint)
+    # app.register_blueprint(api_blueprint)
+    app.register_blueprint(swagger_blueprint)
+    app.register_blueprint(swagger_demo_blueprint)
 
     config_menu(app, [
         Bunch(name='profile', text='Home', roles=['default'], order=1),
