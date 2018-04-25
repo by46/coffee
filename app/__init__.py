@@ -82,12 +82,14 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     from .h5 import h5 as h5_blueprint
     from .portal import portal as portal_blueprint
+    from .google import router as google_blueprint
     from .api import api as api_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(h5_blueprint)
     app.register_blueprint(portal_blueprint)
+    app.register_blueprint(google_blueprint)
     app.register_blueprint(api_blueprint)
 
     config_menu(app, [

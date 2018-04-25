@@ -1,5 +1,6 @@
 # Local development environment setting
 DEBUG = True
+HTTP_PORT = 80
 
 # SQL-Alchemy settings
 SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:root@10.16.76.245:3306/coffee"

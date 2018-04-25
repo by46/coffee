@@ -1,0 +1,408 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Simple API overview",
+    "version": "v2"
+  },
+  "paths": {
+    "/": {
+      "summary": "version api",
+      "description": "hello",
+      "get": {
+        "deprecated": true,
+        "operationId": "listVersionV2",
+        "externalDocs": {
+          "description": "ffile",
+          "url": "https://example.com"
+        },
+        "tags": [
+          "version"
+        ],
+        "summary": "List API versions",
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "demo 2",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "hill",
+        "description": "hil",
+        "operationId": "post id",
+        "tags": [
+          "version"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+        }
+      }
+    },
+    "/v2": {
+      "get": {
+        "tags": [
+          "version"
+        ],
+        "operationId": "getVersionDetail2",
+        "summary": "Show API version details",
+        "description": "demo description",
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{username}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "",
+        "operationId": "getUserByName",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "post",
+        "tags": [
+          "user"
+        ],
+        "operationId": "new api",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": false,
+            "deprecated": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "tags for filter by",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "age",
+            "in": "query",
+            "description": "age params",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "pet to add to share",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user-entity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update user",
+        "operationId": "updateUser",
+        "tags": [
+          "a"
+        ],
+        "requestBody": {
+          "description": "parameter body",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/books"
+              },
+              "example": "user",
+              "examples": {
+                "user": {
+                  "summary": "an example of a user",
+                  "value": {
+                    "id": 2,
+                    "name": "benjamin2"
+                  }
+                }
+              },
+              "encoding": {
+                "book": {
+                  "contentType": "application/json"
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "unexpected error",
+            "headers": {
+              "Next-Range": {
+                "description": "next page range header",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "list user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/books"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets": {
+      "get": {
+        "summary": "get all pets",
+        "operationId": "gets",
+        "tags": [
+          "pet"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "required": true,
+              "default": "tom222",
+              "format": "email"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/pet"
+              }
+            }
+          }
+        },
+        "responses": {
+        }
+      },
+      "put": {
+        "summary": "",
+        "tags": [
+          "pet"
+        ],
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "attachment",
+            "in": "formData",
+            "type": "file"
+          }
+        ],
+        "requestBody1": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "image/jpeg": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/pet"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "attachment": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "attachment": {
+                  "contentType": "image/jpeg"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "message": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": 1,
+          "name": "benjamin"
+        }
+      },
+      "user-entity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "color": {
+            "type": "string"
+          }
+        }
+      },
+      "books": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "book": {
+            "$ref": "#/components/schemas/book"
+          }
+        }
+      },
+      "book": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "pet": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "format": "email"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32",
+            "required": false,
+            "minimum": 0,
+            "default": 1
+          }
+        }
+      }
+    }
+  }
+}

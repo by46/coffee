@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+    <meta name="google-signin-client_id"
+          content="297402843167-l3vtngpi5ur3mnssje0a251d0lcp6dp9.apps.googleusercontent.com">
+</head>
+<body>
+<div>
+    hello
+</div>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<fb:login-button
+        scope="public_profile,email,user_friends"
+        onlogin="checkLoginState();">
+</fb:login-button>
+<button id="info">Logout</button>
+<a href="#" id="logout">Sign out</a>
+</body>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log('Token: ' + id_token);
+    }
+    $("#logout").click(function () {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+    })
+</script>
+
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '408984389527174',
+            cookie: true,
+            xfbml: true,
+            version: 'v2.12'
+        });
+
+        {#        FB.AppEvents.logPageView();#}
+
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            FB.api("/me", function (userinfo) {
+                console.log(userinfo.name + ':' + userinfo.email)
+            }, {scope: 'email'});
+            FB.api('/me?fields=id,email,first_name,last_name,name,gender', function (response) {
+                console.log(JSON.stringify(response));
+            });
+            console.log(response.authResponse.accessToken)
+            console.log(response)
+        }
+    }
+    $("#info").click(function () {
+        FB.logout(function (response) {
+            console.log("Logout", response);
+        })
+    })
+</script>
+<script>
+
+    {#    FB.getLoginStatus(function (response) {#}
+    {#        statusChangeCallback(response);#}
+    {#    });#}
+</script>
+</html>

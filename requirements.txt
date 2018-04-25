@@ -24,3 +24,4 @@ CSSmin
 MarkupSafe
 Six
 Bunch
+PyMongo

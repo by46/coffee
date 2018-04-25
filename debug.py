@@ -1,6 +1,14 @@
 import os
 
+from pymongo import MongoClient
 
+import gridfs
+
+fs = gridfs.GridFS(None)
+fs.put()
+client = MongoClient()
+db = client['demo']
+db.
 def worker():
     print os.getcwd()
     pid = os.fork()
